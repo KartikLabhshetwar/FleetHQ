@@ -7,7 +7,7 @@ export default function HeroSection() {
   const { user, isAuthenticated } = useAuthStore();
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-orange-100 pt-16">
+    <section className="min-h-screen flex items-center justify-center pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-6xl md:text-7xl font-bold text-orange-900 mb-8">
           Enterprise Fleet
