@@ -154,10 +154,10 @@ const DroneManagementForm = () => {
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-3xl font-bold text-orange-900 mb-2">
           {isEditing ? 'Edit Drone' : 'Add New Drone'}
         </h1>
-        <p className="text-gray-600">
+        <p className="text-orange-600">
           {isEditing 
             ? 'Update your drone information' 
             : 'Register a new drone to your fleet'
@@ -193,15 +193,15 @@ const DroneManagementForm = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg overflow-hidden">
+      <form onSubmit={handleSubmit} className="bg-white border-2 border-orange-200 shadow-md rounded-lg overflow-hidden">
         <div className="p-6 space-y-6">
           {/* Basic Information */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Drone Information</h2>
+            <h2 className="text-xl font-semibold text-orange-900 mb-4">Drone Information</h2>
 
             <div className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="name" className="block text-sm font-medium text-orange-700 mb-1">
                   Drone Name *
                 </label>
                 <input
@@ -211,8 +211,8 @@ const DroneManagementForm = () => {
                   value={formData.name}
                   onChange={handleChange}
                   className={`w-full px-3 py-2 border ${
-                    formErrors.name ? 'border-red-300' : 'border-gray-300'
-                  } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                    formErrors.name ? 'border-red-300' : 'border-orange-300'
+                  } rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500`}
                   placeholder="Enter drone name"
                 />
                 {formErrors.name && (
@@ -221,7 +221,7 @@ const DroneManagementForm = () => {
               </div>
 
               <div>
-                <label htmlFor="serialNumber" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="serialNumber" className="block text-sm font-medium text-orange-700 mb-1">
                   Serial Number *
                 </label>
                 <input
@@ -231,8 +231,8 @@ const DroneManagementForm = () => {
                   value={formData.serialNumber}
                   onChange={handleChange}
                   className={`w-full px-3 py-2 border ${
-                    formErrors.serialNumber ? 'border-red-300' : 'border-gray-300'
-                  } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                    formErrors.serialNumber ? 'border-red-300' : 'border-orange-300'
+                  } rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500`}
                   placeholder="Enter serial number"
                   disabled={isEditing} // Cannot edit serial number if editing existing drone
                 />
@@ -242,7 +242,7 @@ const DroneManagementForm = () => {
               </div>
 
               <div>
-                <label htmlFor="model" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="model" className="block text-sm font-medium text-orange-700 mb-1">
                   Drone Model *
                 </label>
                 <input
@@ -252,8 +252,8 @@ const DroneManagementForm = () => {
                   value={formData.model}
                   onChange={handleChange}
                   className={`w-full px-3 py-2 border ${
-                    formErrors.model ? 'border-red-300' : 'border-gray-300'
-                  } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                    formErrors.model ? 'border-red-300' : 'border-orange-300'
+                  } rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500`}
                   placeholder="Enter drone model"
                 />
                 {formErrors.model && (
@@ -264,12 +264,12 @@ const DroneManagementForm = () => {
           </div>
 
           {/* Status and Parameters */}
-          <div className="border-t border-gray-200 pt-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Status and Parameters</h2>
+          <div className="border-t border-orange-200 pt-6">
+            <h2 className="text-xl font-semibold text-orange-900 mb-4">Status and Parameters</h2>
 
             <div className="space-y-4">
               <div>
-                <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="status" className="block text-sm font-medium text-orange-700 mb-1">
                   Current Status
                 </label>
                 <select
@@ -277,7 +277,7 @@ const DroneManagementForm = () => {
                   name="status"
                   value={formData.status}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                 >
                   <option value="available">Available</option>
                   <option value="maintenance">Maintenance</option>
@@ -286,7 +286,7 @@ const DroneManagementForm = () => {
               </div>
 
               <div>
-                <label htmlFor="batteryLevel" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="batteryLevel" className="block text-sm font-medium text-orange-700 mb-1">
                   Battery Level (%)
                 </label>
                 <div className="flex items-center">
@@ -298,9 +298,9 @@ const DroneManagementForm = () => {
                     max="100"
                     value={formData.batteryLevel}
                     onChange={handleChange}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    className="w-full h-2 bg-orange-200 rounded-lg appearance-none cursor-pointer"
                   />
-                  <span className="ml-3 text-gray-700 w-12 text-right">
+                  <span className="ml-3 text-orange-700 w-12 text-right">
                     {formData.batteryLevel}%
                   </span>
                 </div>
@@ -310,7 +310,7 @@ const DroneManagementForm = () => {
               </div>
 
               <div>
-                <label htmlFor="maxFlightTime" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="maxFlightTime" className="block text-sm font-medium text-orange-700 mb-1">
                   Maximum Flight Time (minutes) *
                 </label>
                 <input
@@ -322,8 +322,8 @@ const DroneManagementForm = () => {
                   value={formData.maxFlightTime}
                   onChange={handleChange}
                   className={`w-full px-3 py-2 border ${
-                    formErrors.maxFlightTime ? 'border-red-300' : 'border-gray-300'
-                  } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                    formErrors.maxFlightTime ? 'border-red-300' : 'border-orange-300'
+                  } rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500`}
                 />
                 {formErrors.maxFlightTime && (
                   <p className="mt-1 text-sm text-red-600">{formErrors.maxFlightTime}</p>
@@ -331,7 +331,7 @@ const DroneManagementForm = () => {
               </div>
 
               <div>
-                <label htmlFor="healthStatus" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="healthStatus" className="block text-sm font-medium text-orange-700 mb-1">
                   Health Status
                 </label>
                 <select
@@ -339,7 +339,7 @@ const DroneManagementForm = () => {
                   name="healthStatus"
                   value={formData.healthStatus}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                 >
                   <option value="excellent">Excellent</option>
                   <option value="good">Good</option>
@@ -350,23 +350,23 @@ const DroneManagementForm = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-orange-700 mb-1">
                   Current Location
                 </label>
-                <div className="border border-gray-300 rounded-md p-4 bg-gray-50">
+                <div className="border border-orange-300 rounded-md p-4 bg-orange-50">
                   {formData.location.locationName ? (
                     <div className="mb-3">
                       <span className="font-medium">Current Location: </span>
-                      <span className="text-gray-700">{formData.location.locationName}</span>
+                      <span className="text-orange-700">{formData.location.locationName}</span>
                     </div>
                   ) : (
-                    <div className="mb-3 text-gray-500">
+                    <div className="mb-3 text-orange-500">
                       No location selected. Use the map to set a location.
                     </div>
                   )}
 
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-orange-500">
                       Lat: {formData.location.latitude.toFixed(6)}, 
                       Long: {formData.location.longitude.toFixed(6)}, 
                       Alt: {formData.location.altitude}m
@@ -375,7 +375,7 @@ const DroneManagementForm = () => {
                     <button
                       type="button"
                       onClick={toggleMap}
-                      className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="inline-flex items-center px-3 py-2 border border-orange-300 shadow-sm text-sm leading-4 font-medium rounded-md text-orange-700 bg-white hover:bg-orange-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       {mapVisible ? 'Hide Map' : 'Select on Map'}
                     </button>
@@ -399,7 +399,7 @@ const DroneManagementForm = () => {
                   )}
 
                   <div className="mt-3">
-                    <label htmlFor="locationName" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="locationName" className="block text-sm font-medium text-orange-700 mb-1">
                       Location Name
                     </label>
                     <input
@@ -414,13 +414,13 @@ const DroneManagementForm = () => {
                           locationName: e.target.value
                         }
                       })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                       placeholder="Enter location name or description"
                     />
                   </div>
 
                   <div className="mt-3">
-                    <label htmlFor="altitude" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="altitude" className="block text-sm font-medium text-orange-700 mb-1">
                       Altitude (meters)
                     </label>
                     <input
@@ -435,7 +435,7 @@ const DroneManagementForm = () => {
                           altitude: Number(e.target.value)
                         }
                       })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                     />
                   </div>
                 </div>
@@ -445,11 +445,11 @@ const DroneManagementForm = () => {
         </div>
 
         {/* Form Actions */}
-        <div className="bg-gray-50 px-6 py-4 flex justify-end space-x-3">
+        <div className="bg-red-50 px-6 py-4 flex justify-end space-x-3">
           <button
             type="button"
             onClick={() => navigate('/fleet')}
-            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="px-4 py-2 border border-red-500 border-b-5 border-r-5 hover:border-2 rounded-md "
           >
             Cancel
           </button>
@@ -457,7 +457,7 @@ const DroneManagementForm = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300"
+            className="px-4 py-2 border border-orange-300 border-b-5 border-r-5 hover:border-2 rounded-md "
           >
             {isLoading ? 'Saving...' : isEditing ? 'Update Drone' : 'Add Drone'}
           </button>

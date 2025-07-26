@@ -14,18 +14,22 @@ import { fetchDrones } from '../../services/droneService';
 import { fetchMissions } from '../../services/missionService';
 import useDroneStore from '../../stores/droneStore';
 import useMissionStore from '../../stores/missionStore';
+import useAuthStore from '../../stores/authStore';
 
 const Dashboard = () => {
   const { drones } = useDroneStore();
   const { missions } = useMissionStore();
+  const { isAuthenticated, token } = useAuthStore();
   const [upcomingMissions, setUpcomingMissions] = useState([]);
   const [recentActivities, setRecentActivities] = useState([]);
   
-  // Fetch drones and missions on component mount
+  // Fetch drones and missions when authenticated
   useEffect(() => {
-    fetchDrones();
-    fetchMissions();
-  }, []);
+    if (isAuthenticated && token) {
+      fetchDrones();
+      fetchMissions();
+    }
+  }, [isAuthenticated, token]);
   
   // Calculate drone stats
   const droneStats = {
@@ -150,26 +154,23 @@ const Dashboard = () => {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="mt-1 text-sm text-gray-600">Welcome to your FleetHQ command center</p>
+        <h1 className="text-2xl font-bold text-orange-900">Dashboard</h1>
+        <p className="mt-1 text-sm text-orange-600">Welcome to your FleetHQ command center</p>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {/* Mission Stats Card */}
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white overflow-hidden rounded-3xl border border-b-5 border-r-5 border-orange-500 hover:border-2">
           <div className="p-5">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <MapPin className="h-6 w-6 text-indigo-600" />
-              </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">
+                  <dt className="text-sm font-medium text-orange-500 truncate">
                     Total Missions
                   </dt>
                   <dd>
-                    <div className="text-lg font-medium text-gray-900">
+                    <div className="text-lg font-medium text-orange-900">
                       {missionStats.totalMissions}
                     </div>
                   </dd>
@@ -177,9 +178,9 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="bg-gray-50 px-5 py-3">
+          <div className="bg-orange-50 px-5 py-3">
             <div className="text-sm">
-              <Link to="/missions" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link to="/missions" className="font-medium text-orange-900 hover:text-orange-700">
                 View all missions
               </Link>
             </div>
@@ -187,19 +188,16 @@ const Dashboard = () => {
         </div>
 
         {/* Drone Stats Card */}
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white overflow-hidden rounded-3xl border border-b-5 border-r-5 border-orange-500 hover:border-2">
           <div className="p-5">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <Plane className="h-6 w-6 text-green-600" />
-              </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">
+                  <dt className="text-sm font-medium text-orange-500 truncate">
                     Available Drones
                   </dt>
                   <dd>
-                    <div className="text-lg font-medium text-gray-900">
+                    <div className="text-lg font-medium text-orange-900">
                       {droneStats.availableDrones} / {droneStats.totalDrones}
                     </div>
                   </dd>
@@ -207,9 +205,9 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="bg-gray-50 px-5 py-3">
+          <div className="bg-orange-50 px-5 py-3">
             <div className="text-sm">
-              <Link to="/fleet" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link to="/fleet" className="font-medium text-orange-900 hover:text-orange-700">
                 View fleet status
               </Link>
             </div>
@@ -217,19 +215,16 @@ const Dashboard = () => {
         </div>
 
         {/* Scheduled Missions Card */}
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white overflow-hidden rounded-3xl border border-b-5 border-r-5 border-orange-500 hover:border-2">
           <div className="p-5">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <Calendar className="h-6 w-6 text-blue-600" />
-              </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">
+                  <dt className="text-sm font-medium text-orange-500 truncate">
                     Scheduled Missions
                   </dt>
                   <dd>
-                    <div className="text-lg font-medium text-gray-900">
+                    <div className="text-lg font-medium text-orange-900">
                       {missionStats.scheduledMissions}
                     </div>
                   </dd>
@@ -237,9 +232,9 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="bg-gray-50 px-5 py-3">
+          <div className="bg-orange-50 px-5 py-3">
             <div className="text-sm">
-              <Link to="/monitoring" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link to="/monitoring" className="font-medium text-orange-900 hover:text-orange-700">
                 View schedule
               </Link>
             </div>
@@ -247,19 +242,16 @@ const Dashboard = () => {
         </div>
 
         {/* Completed Missions Card */}
-        <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="bg-white overflow-hidden rounded-3xl border border-b-5 border-r-5 border-orange-500 hover:border-2">
           <div className="p-5">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <CheckCircle className="h-6 w-6 text-purple-600" />
-              </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">
+                  <dt className="text-sm font-medium text-orange-500 truncate">
                     Completed Missions
                   </dt>
                   <dd>
-                    <div className="text-lg font-medium text-gray-900">
+                    <div className="text-lg font-medium text-orange-900">
                       {missionStats.completedMissions}
                     </div>
                   </dd>
@@ -267,9 +259,9 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="bg-gray-50 px-5 py-3">
+          <div className="bg-orange-50 px-5 py-3">
             <div className="text-sm">
-              <Link to="/reports" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link to="/reports" className="font-medium text-orange-900 hover:text-orange-700">
                 View analytics
               </Link>
             </div>
@@ -279,23 +271,20 @@ const Dashboard = () => {
 
       {/* Quick Actions */}
       <div className="mt-8">
-        <h2 className="text-lg leading-6 font-medium text-gray-900">Quick Actions</h2>
+        <h2 className="text-lg leading-6 font-medium text-orange-900">Quick Actions</h2>
         <div className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="bg-white overflow-hidden shadow rounded-lg">
+          <div className="bg-orange-50 border-2 border-orange-500 overflow-hidden shadow rounded-lg">
             <div className="px-4 py-5 sm:p-6">
               <div className="flex items-center">
-                <div className="flex-shrink-0 bg-indigo-100 rounded-md p-3">
-                  <MapPin className="h-6 w-6 text-indigo-600" />
-                </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-medium text-gray-900">Plan New Mission</h3>
-                  <p className="mt-1 text-sm text-gray-500">Create a new FleetHQ mission</p>
+                  <h3 className="text-lg font-medium text-orange-900">Plan New Mission</h3>
+                  <p className="mt-1 text-sm text-orange-500">Create a new FleetHQ mission</p>
                 </div>
               </div>
               <div className="mt-5">
                 <Link
                   to="/missions/new"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="inline-flex items-center px-4 py-2 border border-orange-500 border-b-3 border-r-3 hover:border-2 text-sm font-medium rounded-md shadow-sm text-orange-700"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Create Mission
@@ -304,21 +293,18 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white overflow-hidden shadow rounded-lg">
+          <div className="bg-orange-50 border-2 border-orange-500 overflow-hidden shadow rounded-lg">
             <div className="px-4 py-5 sm:p-6">
               <div className="flex items-center">
-                <div className="flex-shrink-0 bg-green-100 rounded-md p-3">
-                  <Plane className="h-6 w-6 text-green-600" />
-                </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-medium text-gray-900">Manage Drones</h3>
-                  <p className="mt-1 text-sm text-gray-500">Add or update drones in your fleet</p>
+                  <h3 className="text-lg font-medium text-orange-900">Manage Drones</h3>
+                  <p className="mt-1 text-sm text-orange-500">Add or update drones in your fleet</p>
                 </div>
               </div>
               <div className="mt-5">
                 <Link
                   to="/fleet/new"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  className="inline-flex items-center px-4 py-2 border border-orange-500 border-b-3 border-r-3 hover:border-2 text-sm font-medium rounded-md shadow-sm text-orange-700"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Drone
@@ -327,21 +313,18 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white overflow-hidden shadow rounded-lg">
+          <div className="bg-orange-50 border-2 border-orange-500 overflow-hidden shadow rounded-lg">
             <div className="px-4 py-5 sm:p-6">
               <div className="flex items-center">
-                <div className="flex-shrink-0 bg-purple-100 rounded-md p-3">
-                  <Calendar className="h-6 w-6 text-purple-600" />
-                </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-medium text-gray-900">View Mission Calendar</h3>
-                  <p className="mt-1 text-sm text-gray-500">See your mission schedule</p>
+                  <h3 className="text-lg font-medium text-orange-900">View Mission Calendar</h3>
+                  <p className="mt-1 text-sm text-orange-500">See your mission schedule</p>
                 </div>
               </div>
               <div className="mt-5">
                 <Link
                   to="/missions"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                  className="inline-flex items-center px-4 py-2 border border-orange-500 border-b-3 border-r-3 hover:border-2 text-sm font-medium rounded-md shadow-sm text-orange-700"
                 >
                   View Calendar
                 </Link>
@@ -354,15 +337,15 @@ const Dashboard = () => {
       {/* Upcoming Missions and Recent Activity section */}
       <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
         {/* Upcoming Missions */}
-        <div className="bg-white shadow rounded-lg">
-          <div className="px-4 py-5 border-b border-gray-200 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
+        <div className="bg-yellow-50 shadow-amber-500 border-2 border-yellow-500 rounded-lg">
+          <div className="px-4 py-5 border-b border-orange-200 sm:px-6">
+            <h3 className="text-lg leading-6 font-medium text-orange-900">
               Upcoming Missions
             </h3>
           </div>
           <div className="px-4 py-5 sm:p-6">
             <div className="flow-root">
-              <ul className="-my-5 divide-y divide-gray-200">
+              <ul className="-my-5 divide-y divide-orange-200">
                 {upcomingMissions.length > 0 ? (
                   upcomingMissions.map((mission) => (
                     <li key={mission.id} className="py-4">
@@ -373,15 +356,15 @@ const Dashboard = () => {
                           </span>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">
+                          <p className="text-sm font-medium text-orange-900 truncate">
                             {mission.name}
                           </p>
-                          <p className="text-sm text-gray-500 truncate">
+                          <p className="text-sm text-orange-500 truncate">
                             {mission.location}
                           </p>
                         </div>
                         <div className="flex-shrink-0">
-                          <p className="text-sm text-gray-500">
+                          <p className="text-sm text-orange-500">
                             {new Date(mission.date).toLocaleDateString()} at{' '}
                             {new Date(mission.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </p>
@@ -390,16 +373,16 @@ const Dashboard = () => {
                     </li>
                   ))
                 ) : (
-                  <li className="py-4 text-center text-gray-500">
+                  <li className="py-4 text-center text-orange-500">
                     No upcoming missions scheduled
                   </li>
                 )}
               </ul>
             </div>
-            <div className="mt-6">
+            <div className="mt-6 flex justify-center">
               <Link
                 to="/monitoring"
-                className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                className="w-50 flex justify-center items-center px-4 py-2 border border-orange-300 shadow-sm text-sm font-medium rounded-md text-orange-700 bg-white hover:bg-orange-50"
               >
                 View All
               </Link>
@@ -408,15 +391,15 @@ const Dashboard = () => {
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-white shadow rounded-lg">
-          <div className="px-4 py-5 border-b border-gray-200 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
+        <div className="bg-yellow-50 shadow-amber-500 border-2 border-yellow-500 rounded-lg">
+          <div className="px-4 py-5 border-b border-orange-200 sm:px-6">
+            <h3 className="text-lg leading-6 font-medium text-orange-900">
               Recent Activity
             </h3>
           </div>
           <div className="px-4 py-5 sm:p-6">
             <div className="flow-root">
-              <ul className="-my-5 divide-y divide-gray-200">
+              <ul className="-my-5 divide-y divide-orange-200">
                 {recentActivities.length > 0 ? (
                   recentActivities.map((activity) => (
                     <li key={activity.id} className="py-4">
@@ -449,7 +432,7 @@ const Dashboard = () => {
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">
+                          <p className="text-sm font-medium text-orange-900 truncate">
                             {activity.type === 'completion' && `Mission Completed: ${activity.mission}`}
                             {activity.type === 'start' && `Mission Started: ${activity.mission}`}
                             {activity.type === 'scheduled' && `Mission Scheduled: ${activity.mission}`}
@@ -458,22 +441,22 @@ const Dashboard = () => {
                           </p>
                         </div>
                         <div className="flex-shrink-0">
-                          <p className="text-sm text-gray-500">{activity.time}</p>
+                          <p className="text-sm text-orange-500">{activity.time}</p>
                         </div>
                       </div>
                     </li>
                   ))
                 ) : (
-                  <li className="py-4 text-center text-gray-500">
+                  <li className="py-4 text-center text-orange-500">
                     No recent activity
                   </li>
                 )}
               </ul>
             </div>
-            <div className="mt-6">
+            <div className="mt-6 flex justify-center">
               <Link
                 to="/monitoring"
-                className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                className="w-50 flex justify-center items-center px-4 py-2 border border-orange-300 shadow-sm text-sm font-medium rounded-md text-orange-700 bg-white hover:bg-orange-50"
               >
                 View All Activity
               </Link>

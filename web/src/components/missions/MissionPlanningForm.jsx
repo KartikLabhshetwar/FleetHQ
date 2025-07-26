@@ -292,11 +292,11 @@ const MissionPlanningForm = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-3xl font-bold text-orange-900 mb-2">
           {isEditMode ? 'Edit Mission' : 'Create New Mission'}
         </h1>
-        <p className="text-gray-600">
-          {isEditMode ? 'Update your fleetHq mission' : 'Plan your fleetHq mission'}
+        <p className="text-orange-600">
+          {isEditMode ? 'Update your fleetHQ mission' : 'Plan your fleetHQ mission'}
         </p>
       </div>
       
@@ -331,18 +331,18 @@ const MissionPlanningForm = () => {
       {isLoading && !formData.name ? (
         <div className="text-center py-16">
           <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-600 border-r-transparent"></div>
-          <p className="mt-4 text-gray-600">Loading mission data...</p>
+          <p className="mt-4 text-orange-600">Loading mission data...</p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-6">
             {/* Basic Information */}
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Mission Details</h2>
+            <div className="bg-white border border-orange-200 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-orange-900 mb-4">Mission Details</h2>
               
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="name" className="block text-sm font-medium text-orange-700 mb-1">
                     Mission Name *
                   </label>
                   <input
@@ -352,8 +352,8 @@ const MissionPlanningForm = () => {
                     value={formData.name}
                     onChange={handleChange}
                     className={`w-full px-3 py-2 border ${
-                      formErrors.name ? 'border-red-300' : 'border-gray-300'
-                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                      formErrors.name ? 'border-red-300' : 'border-orange-300'
+                    } rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500`}
                     placeholder="Enter mission name"
                   />
                   {formErrors.name && (
@@ -362,7 +362,7 @@ const MissionPlanningForm = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="description" className="block text-sm font-medium text-orange-700 mb-1">
                     Description
                   </label>
                   <textarea
@@ -371,7 +371,7 @@ const MissionPlanningForm = () => {
                     value={formData.description}
                     onChange={handleChange}
                     rows="3"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                     placeholder="Enter mission description"
                   ></textarea>
                 </div>
@@ -379,12 +379,12 @@ const MissionPlanningForm = () => {
             </div>
             
             {/* Drone Selection */}
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Drone Selection</h2>
+            <div className="bg-white border border-orange-200 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-orange-900 mb-4">Drone Selection</h2>
               
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="drone" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="drone" className="block text-sm font-medium text-orange-700 mb-1">
                     Select Drone *
                   </label>
                   <select
@@ -393,8 +393,8 @@ const MissionPlanningForm = () => {
                     value={formData.drone}
                     onChange={handleDroneChange}
                     className={`w-full px-3 py-2 border ${
-                      formErrors.drone ? 'border-red-300' : 'border-gray-300'
-                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                      formErrors.drone ? 'border-red-300' : 'border-orange-300'
+                    } rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500`}
                   >
                     <option value="">-- Select a drone --</option>
                     {availableDrones.map((drone) => (
@@ -414,7 +414,7 @@ const MissionPlanningForm = () => {
                   )}
                   
                   {!formData.schedule.dateTime && (
-                    <p className="mt-3 text-sm text-blue-600 bg-blue-50 border border-blue-200 rounded-md p-2">
+                    <p className="mt-3 text-sm text-orange-600 bg-yellow-50 border border-yellow-200 rounded-md p-2">
                       Select a mission date and time to see available drones.
                     </p>
                   )}
@@ -423,13 +423,13 @@ const MissionPlanningForm = () => {
             </div>
             
             {/* Flight Parameters */}
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Flight Parameters</h2>
+            <div className="bg-white border border-orange-200 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-orange-900 mb-4">Flight Parameters</h2>
               
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="altitude" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="altitude" className="block text-sm font-medium text-orange-700 mb-1">
                       Altitude (meters) *
                     </label>
                     <input
@@ -441,8 +441,8 @@ const MissionPlanningForm = () => {
                       value={formData.flightParameters.altitude}
                       onChange={handleFlightParamChange}
                       className={`w-full px-3 py-2 border ${
-                        formErrors.altitude ? 'border-red-300' : 'border-gray-300'
-                      } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                        formErrors.altitude ? 'border-red-300' : 'border-orange-300'
+                      } rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500`}
                     />
                     {formErrors.altitude && (
                       <p className="mt-1 text-sm text-red-600">{formErrors.altitude}</p>
@@ -450,7 +450,7 @@ const MissionPlanningForm = () => {
                   </div>
                   
                   <div>
-                    <label htmlFor="speed" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="speed" className="block text-sm font-medium text-orange-700 mb-1">
                       Speed (m/s) *
                     </label>
                     <input
@@ -463,8 +463,8 @@ const MissionPlanningForm = () => {
                       value={formData.flightParameters.speed}
                       onChange={handleFlightParamChange}
                       className={`w-full px-3 py-2 border ${
-                        formErrors.speed ? 'border-red-300' : 'border-gray-300'
-                      } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                        formErrors.speed ? 'border-red-300' : 'border-orange-300'
+                      } rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500`}
                     />
                     {formErrors.speed && (
                       <p className="mt-1 text-sm text-red-600">{formErrors.speed}</p>
@@ -473,7 +473,7 @@ const MissionPlanningForm = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="flightPattern" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="flightPattern" className="block text-sm font-medium text-orange-700 mb-1">
                     Flight Pattern
                   </label>
                   <select
@@ -481,7 +481,7 @@ const MissionPlanningForm = () => {
                     name="flightPattern"
                     value={formData.flightParameters.flightPattern}
                     onChange={handleFlightParamChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                   >
                     <option value="grid">Grid (Default)</option>
                     <option value="perimeter">Perimeter</option>
@@ -490,7 +490,7 @@ const MissionPlanningForm = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="overlap" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="overlap" className="block text-sm font-medium text-orange-700 mb-1">
                     Image Overlap (%)
                   </label>
                   <input
@@ -502,9 +502,9 @@ const MissionPlanningForm = () => {
                     step="5"
                     value={formData.flightParameters.overlap}
                     onChange={handleFlightParamChange}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    className="w-full h-2 bg-orange-200 rounded-lg appearance-none cursor-pointer"
                   />
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
+                  <div className="flex justify-between text-xs text-orange-500 mt-1">
                     <span>0%</span>
                     <span>{formData.flightParameters.overlap}%</span>
                     <span>90%</span>
@@ -514,12 +514,12 @@ const MissionPlanningForm = () => {
             </div>
             
             {/* Scheduling */}
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Mission Schedule</h2>
+            <div className="bg-white border border-orange-200 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-orange-900 mb-4">Mission Schedule</h2>
               
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="scheduleType" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="scheduleType" className="block text-sm font-medium text-orange-700 mb-1">
                     Schedule Type
                   </label>
                   <div className="flex space-x-4">
@@ -531,9 +531,9 @@ const MissionPlanningForm = () => {
                         value="oneTime"
                         checked={formData.schedule.type === 'oneTime'}
                         onChange={handleScheduleTypeChange}
-                        className="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                        className="h-4 w-4 text-indigo-600 border-orange-300 focus:ring-orange-500"
                       />
-                      <label htmlFor="oneTime" className="ml-2 text-sm text-gray-700">
+                      <label htmlFor="oneTime" className="ml-2 text-sm text-orange-700">
                         One-time
                       </label>
                     </div>
@@ -546,9 +546,9 @@ const MissionPlanningForm = () => {
                         value="recurring"
                         checked={formData.schedule.type === 'recurring'}
                         onChange={handleScheduleTypeChange}
-                        className="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                        className="h-4 w-4 text-indigo-600 border-orange-300 focus:ring-orange-500"
                       />
-                      <label htmlFor="recurring" className="ml-2 text-sm text-gray-700">
+                      <label htmlFor="recurring" className="ml-2 text-sm text-orange-700">
                         Recurring
                       </label>
                     </div>
@@ -556,7 +556,7 @@ const MissionPlanningForm = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="dateTime" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="dateTime" className="block text-sm font-medium text-orange-700 mb-1">
                     Start Date and Time *
                   </label>
                   <input
@@ -566,8 +566,8 @@ const MissionPlanningForm = () => {
                     value={formData.schedule.dateTime}
                     onChange={handleDateTimeChange}
                     className={`w-full px-3 py-2 border ${
-                      formErrors.dateTime ? 'border-red-300' : 'border-gray-300'
-                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                      formErrors.dateTime ? 'border-red-300' : 'border-orange-300'
+                    } rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500`}
                   />
                   {formErrors.dateTime && (
                     <p className="mt-1 text-sm text-red-600">{formErrors.dateTime}</p>
@@ -575,10 +575,10 @@ const MissionPlanningForm = () => {
                 </div>
                 
                 {showRecurrence && (
-                  <div className="space-y-4 border-t border-gray-200 pt-4 mt-4">
+                  <div className="space-y-4 border-t border-orange-200 pt-4 mt-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="frequency" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="frequency" className="block text-sm font-medium text-orange-700 mb-1">
                           Frequency
                         </label>
                         <select
@@ -586,7 +586,7 @@ const MissionPlanningForm = () => {
                           name="recurrence.frequency"
                           value={formData.schedule.recurrence.frequency}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                         >
                           <option value="daily">Daily</option>
                           <option value="weekly">Weekly</option>
@@ -595,7 +595,7 @@ const MissionPlanningForm = () => {
                       </div>
                       
                       <div>
-                        <label htmlFor="interval" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="interval" className="block text-sm font-medium text-orange-700 mb-1">
                           Every
                         </label>
                         <div className="flex items-center">
@@ -607,9 +607,9 @@ const MissionPlanningForm = () => {
                             max="30"
                             value={formData.schedule.recurrence.interval}
                             onChange={handleChange}
-                            className="w-20 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            className="w-20 px-3 py-2 border border-orange-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                           />
-                          <span className="ml-2 text-sm text-gray-600">
+                          <span className="ml-2 text-sm text-orange-600">
                             {formData.schedule.recurrence.frequency === 'daily' && 'day(s)'}
                             {formData.schedule.recurrence.frequency === 'weekly' && 'week(s)'}
                             {formData.schedule.recurrence.frequency === 'monthly' && 'month(s)'}
@@ -619,7 +619,7 @@ const MissionPlanningForm = () => {
                     </div>
                     
                     <div>
-                      <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="endDate" className="block text-sm font-medium text-orange-700 mb-1">
                         End Date *
                       </label>
                       <input
@@ -629,8 +629,8 @@ const MissionPlanningForm = () => {
                         value={formData.schedule.recurrence.endDate}
                         onChange={handleChange}
                         className={`w-full px-3 py-2 border ${
-                          formErrors.endDate ? 'border-red-300' : 'border-gray-300'
-                        } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                          formErrors.endDate ? 'border-red-300' : 'border-orange-300'
+                        } rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500`}
                       />
                       {formErrors.endDate && (
                         <p className="mt-1 text-sm text-red-600">{formErrors.endDate}</p>
@@ -646,7 +646,7 @@ const MissionPlanningForm = () => {
               <button
                 type="button"
                 onClick={() => navigate('/missions')}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="px-4 py-2 bg-red-50  rounded-md border border-red-500 border-b-5 border-r-5 hover:border-2"
               >
                 Cancel
               </button>
@@ -654,7 +654,7 @@ const MissionPlanningForm = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300"
+                className="px-4 py-2 border border-b-5 border-r-5 border-orange-300 hover:border-2 rounded-md shadow-sm text-sm font-medium text-orange-900 bg-orange-50 "
               >
                 {isLoading ? (isEditMode ? 'Updating...' : 'Creating...') : (isEditMode ? 'Update Mission' : 'Create Mission')}
               </button>
@@ -663,8 +663,8 @@ const MissionPlanningForm = () => {
           
           {/* Map Section */}
           <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Survey Area</h2>
+            <div className="bg-white border border-orange-200 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-orange-900 mb-4">Survey Area</h2>
               <div className=" bg-white p-2 rounded shadow-md text-sm">
                   {isEditMode && formData.surveyArea ? 
                   'Edit the existing survey area or create a new one' : 
@@ -695,8 +695,8 @@ const MissionPlanningForm = () => {
             </div>
             
             {/* Flight Pattern Preview */}
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Flight Preview</h2>
+            <div className="bg-white border border-orange-200 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-orange-900 mb-4">Flight Preview</h2>
               
               {formData.surveyArea ? (
                 <FlightPatternPreview 
@@ -704,8 +704,8 @@ const MissionPlanningForm = () => {
                   surveyArea={formData.surveyArea}
                 />
               ) : (
-                <div className="bg-gray-100 rounded-lg p-6 text-center h-60 flex items-center justify-center">
-                  <div className="text-gray-500">
+                <div className="bg-orange-100 rounded-lg p-6 text-center h-60 flex items-center justify-center">
+                  <div className="text-orange-500">
                     <p>Define a survey area to see flight preview</p>
                   </div>
                 </div>
@@ -713,40 +713,40 @@ const MissionPlanningForm = () => {
             </div>
             
             {/* Mission Summary */}
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Mission Summary</h2>
+            <div className="bg-white border border-orange-200 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-orange-900 mb-4">Mission Summary</h2>
               
               <div className="space-y-3">
-                <div className="flex justify-between border-b border-gray-100 pb-2">
-                  <span className="text-sm text-gray-500">Altitude:</span>
+                <div className="flex justify-between border-b border-orange-100 pb-2">
+                  <span className="text-sm text-orange-500">Altitude:</span>
                   <span className="text-sm font-medium">{formData.flightParameters.altitude} meters</span>
                 </div>
                 
-                <div className="flex justify-between border-b border-gray-100 pb-2">
-                  <span className="text-sm text-gray-500">Speed:</span>
+                <div className="flex justify-between border-b border-orange-100 pb-2">
+                  <span className="text-sm text-orange-500">Speed:</span>
                   <span className="text-sm font-medium">{formData.flightParameters.speed} m/s</span>
                 </div>
                 
-                <div className="flex justify-between border-b border-gray-100 pb-2">
-                  <span className="text-sm text-gray-500">Flight Pattern:</span>
+                <div className="flex justify-between border-b border-orange-100 pb-2">
+                  <span className="text-sm text-orange-500">Flight Pattern:</span>
                   <span className="text-sm font-medium capitalize">{formData.flightParameters.flightPattern}</span>
                 </div>
                 
-                <div className="flex justify-between border-b border-gray-100 pb-2">
-                  <span className="text-sm text-gray-500">Image Overlap:</span>
+                <div className="flex justify-between border-b border-orange-100 pb-2">
+                  <span className="text-sm text-orange-500">Image Overlap:</span>
                   <span className="text-sm font-medium">{formData.flightParameters.overlap}%</span>
                 </div>
                 
-                <div className="flex justify-between border-b border-gray-100 pb-2">
-                  <span className="text-sm text-gray-500">Schedule Type:</span>
+                <div className="flex justify-between border-b border-orange-100 pb-2">
+                  <span className="text-sm text-orange-500">Schedule Type:</span>
                   <span className="text-sm font-medium">
                     {formData.schedule.type === 'oneTime' ? 'One-time' : 'Recurring'}
                   </span>
                 </div>
                 
                 {formData.schedule.dateTime && (
-                  <div className="flex justify-between border-b border-gray-100 pb-2">
-                    <span className="text-sm text-gray-500">Start Date/Time:</span>
+                  <div className="flex justify-between border-b border-orange-100 pb-2">
+                    <span className="text-sm text-orange-500">Start Date/Time:</span>
                     <span className="text-sm font-medium">
                       {new Date(formData.schedule.dateTime).toLocaleString()}
                     </span>
@@ -755,7 +755,7 @@ const MissionPlanningForm = () => {
                 
                 {formData.drone && (
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500">Selected Drone:</span>
+                    <span className="text-sm text-orange-500">Selected Drone:</span>
                     <span className="text-sm font-medium">
                       {availableDrones.find(d => d._id === formData.drone)?.name || 'Loading...'}
                     </span>

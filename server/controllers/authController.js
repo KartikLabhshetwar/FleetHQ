@@ -83,8 +83,20 @@ const getMe = async (req, res) => {
   }
 };
 
+// Logout user (optional - mainly for cleanup if you implement token blacklisting)
+const logoutUser = async (req, res) => {
+  try {
+    // For JWT tokens, logout is typically handled client-side
+    // But you can implement token blacklisting here if needed
+    res.json({ message: "Logged out successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getMe,
+  logoutUser,
 };

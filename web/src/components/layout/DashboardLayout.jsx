@@ -11,7 +11,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="h-screen flex overflow-hidden bg-gray-100">
+    <div className="h-screen flex overflow-hidden bg-orange-25">
       {/* Static sidebar for desktop */}
       <div className="hidden md:flex md:flex-shrink-0">
         <Sidebar isMobile={false} toggleSidebar={toggleSidebar} />
@@ -25,7 +25,7 @@ const DashboardLayout = () => {
       {/* Overlay for mobile sidebar */}
       {isSidebarOpen && (
         <div 
-          className="fixed inset-0 z-40 bg-gray-600 bg-opacity-75 md:hidden" 
+          className="fixed inset-0 z-40 bg-orange-900 bg-opacity-70 md:hidden" 
           onClick={toggleSidebar}
         ></div>
       )}
@@ -35,7 +35,7 @@ const DashboardLayout = () => {
         <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
           <button
             onClick={toggleSidebar}
-            className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none"
+            className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-orange-500 hover:text-orange-700 focus:outline-none hover:bg-orange-50"
           >
             <span className="sr-only">Open sidebar</span>
             <Menu className="h-6 w-6" />

@@ -17,8 +17,17 @@ const getConfig = (token) => {
 
 // Helper to get token from localStorage
 const getToken = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  return user?.token;
+  try {
+    const authStorage = localStorage.getItem("auth-storage");
+    if (authStorage) {
+      const { state } = JSON.parse(authStorage);
+      return state?.token;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error getting token from storage:', error);
+    return null;
+  }
 };
 
 // Fetch all missions
@@ -27,7 +36,7 @@ export const fetchMissions = async () => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log("No token available for operation");
     return null;
   }
 
@@ -57,7 +66,7 @@ export const fetchMissionById = async (id) => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log("No token available for operation");
     return null;
   }
 
@@ -88,7 +97,7 @@ export const createMission = async (missionData) => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log("No token available for operation");
     return null;
   }
 
@@ -118,7 +127,7 @@ export const updateMission = async (id, missionData) => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log("No token available for operation");
     return null;
   }
 
@@ -152,7 +161,7 @@ export const deleteMission = async (id) => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log("No token available for operation");
     return false;
   }
 

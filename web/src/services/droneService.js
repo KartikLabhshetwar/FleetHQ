@@ -17,8 +17,17 @@ const getConfig = (token) => {
 
 // Helper to get token from localStorage
 const getToken = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  return user?.token;
+  try {
+    const authStorage = localStorage.getItem("auth-storage");
+    if (authStorage) {
+      const { state } = JSON.parse(authStorage);
+      return state?.token;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error getting token from storage:', error);
+    return null;
+  }
 };
 
 // Fetch all drones
@@ -27,7 +36,8 @@ export const fetchDrones = async () => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    // Don't set error immediately - auth might still be loading
+    console.log('No token available for fetchDrones');
     return null;
   }
 
@@ -56,7 +66,7 @@ export const fetchAvailableDrones = async (startDateTime, endDateTime) => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log('No token available for fetchAvailableDrones');
     return null;
   }
 
@@ -93,7 +103,7 @@ export const fetchDroneById = async (id) => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log('No token available for fetchDroneById');
     return null;
   }
 
@@ -123,7 +133,7 @@ export const createDrone = async (droneData) => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log('No token available for createDrone');
     return null;
   }
 
@@ -152,7 +162,7 @@ export const updateDrone = async (id, droneData) => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log('No token available for updateDrone');
     return null;
   }
 
@@ -185,7 +195,7 @@ export const updateDroneLocation = async (id, locationData) => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log("No token available for operation");
     return false;
   }
 
@@ -218,7 +228,7 @@ export const updateDroneHealthStatus = async (id, healthStatus) => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log("No token available for operation");
     return false;
   }
 
@@ -243,7 +253,7 @@ export const deleteDrone = async (id) => {
   const token = getToken();
 
   if (!token) {
-    setError("Authentication required");
+    console.log("No token available for operation");
     return false;
   }
 

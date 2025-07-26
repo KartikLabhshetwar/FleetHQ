@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuthStore from '../../stores/authStore';
-import { login } from '../../services/authService';
+import { login, validateSession } from '../../services/authService';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,18 +11,30 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { setUser } = useAuthStore();
+  const { setUser, setAuthenticated } = useAuthStore();
 
   // Check if we were redirected from another page
   const from = location.state?.from?.pathname || '/dashboard';
 
   useEffect(() => {
     // Check if already logged in
-    const user = localStorage.getItem('user');
-    if (user) {
-      navigate('/dashboard', { replace: true });
-    }
-  }, [navigate]);
+    const checkExistingAuth = async () => {
+      try {
+        const validatedUser = await validateSession();
+        if (validatedUser) {
+          setUser(validatedUser);
+          setAuthenticated(true);
+          navigate(from, { replace: true });
+        }
+      } catch (error) {
+        console.error('Session validation failed:', error);
+        // Clear any invalid auth data
+        localStorage.removeItem('auth-storage');
+      }
+    };
+
+    checkExistingAuth();
+  }, [navigate, from, setUser, setAuthenticated]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,12 +42,12 @@ const Login = () => {
     setError('');
     
     try {
-      // Attempt login with email and password, not the entire form data object
+      // Attempt login with email and password
       const response = await login({email, password});
       
-      // Store user in localStorage and Zustand state
-      localStorage.setItem('user', JSON.stringify(response));
+      // Store user in Zustand state (which will also persist to localStorage)
       setUser(response);
+      setAuthenticated(true);
       
       // Navigate to the page user was trying to access, or dashboard by default
       navigate(from, { replace: true });
@@ -48,22 +60,29 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gradient-to-b from-indigo-50 to-white">
+    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-25 to-orange-50">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="text-center">
-          <h2 className="text-center text-3xl font-extrabold text-gray-900 mb-2">
+          <div className="flex justify-center mb-4">
+            <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+              <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21l3-9 7-4-10-6 3 6z" />
+              </svg>
+            </div>
+          </div>
+          <h2 className="text-center text-3xl font-extrabold text-orange-900 mb-2">
             Sign in to your account
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Welcome to the fleet HQ
+          <p className="mt-2 text-center text-sm text-orange-600">
+            Welcome to FleetHQ
           </p>
         </div>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-200">
+        <div className="bg-white py-8 px-4 shadow-lg sm:rounded-lg sm:px-10 border border-orange-200">
           {error && (
-            <div className="rounded-md bg-red-50 p-4 mb-6">
+            <div className="rounded-md bg-red-50 border border-red-200 p-4 mb-6">
               <div className="flex">
                 <div className="flex-shrink-0">
                   <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -79,7 +98,7 @@ const Login = () => {
           
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-orange-800">
                 Email address
               </label>
               <div className="mt-1">
@@ -88,7 +107,7 @@ const Login = () => {
                   name="email"
                   type="email"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm placeholder-orange-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -98,7 +117,7 @@ const Login = () => {
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="password" className="block text-sm font-medium text-orange-800">
                   Password
                 </label>
                 <div className="text-sm">
@@ -113,7 +132,7 @@ const Login = () => {
                   name="password"
                   type="password"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm placeholder-orange-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -125,7 +144,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300 transition-colors duration-200"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:bg-orange-300 transition-colors duration-200"
               >
                 {isLoading ? (
                   <span className="flex items-center">

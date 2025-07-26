@@ -50,7 +50,7 @@ const DroneDetailView = () => {
       case 'offline':
         return { color: 'bg-red-100 text-red-800', label: 'Offline' };
       default:
-        return { color: 'bg-gray-100 text-gray-800', label: status };
+        return { color: 'bg-orange-100 text-orange-800', label: status };
     }
   };
 
@@ -67,7 +67,7 @@ const DroneDetailView = () => {
       case 'critical':
         return { color: 'text-red-600', label: 'Critical' };
       default:
-        return { color: 'text-gray-500', label: healthStatus || 'Unknown' };
+        return { color: 'text-orange-500', label: healthStatus || 'Unknown' };
     }
   };
 
@@ -83,7 +83,7 @@ const DroneDetailView = () => {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="text-center py-16">
           <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-600 border-r-transparent"></div>
-          <p className="mt-4 text-gray-600">Loading drone details...</p>
+          <p className="mt-4 text-orange-600">Loading drone details...</p>
         </div>
       </div>
     );
@@ -112,17 +112,17 @@ const DroneDetailView = () => {
       <div className="mb-6 flex justify-between items-center">
         <div>
           <div className="flex items-center">
-            <Link to="/fleet" className="text-indigo-600 hover:text-indigo-900 mr-2">
+            <Link to="/fleet" className="text-orange-600 hover:text-orange-900 mr-2">
               <ArrowLeft className="h-5 w-5" />
             </Link>
-            <h1 className="text-3xl font-bold text-gray-900">{currentDrone.name}</h1>
+            <h1 className="text-3xl font-bold text-orange-900">{currentDrone.name}</h1>
           </div>
-          <p className="text-gray-600 mt-1">Drone Details</p>
+          <p className="text-orange-600 mt-1">Drone Details</p>
         </div>
         <div className="flex space-x-3">
           <Link 
             to={`/fleet/${id}/edit`}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+            className="inline-flex items-center px-4 py-2 border border-orange-300 border-b-5 border-r-5 hover:border-2 rounded-lg"
           >
             <Edit className="h-4 w-4 mr-2" />
             Edit
@@ -130,7 +130,7 @@ const DroneDetailView = () => {
           {!deleteConfirm ? (
             <button 
               onClick={() => setDeleteConfirm(true)}
-              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+              className="inline-flex items-center px-4 py-2 rounded-lg border border-b-5 border-r-5 border-red-500 hover:border-2 hover:bg-red-50 text-red-600 font-medium"
             >
               <Trash2 className="h-4 w-4 mr-2" />
               Delete
@@ -145,7 +145,7 @@ const DroneDetailView = () => {
               </button>
               <button 
                 onClick={() => setDeleteConfirm(false)}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                className="inline-flex items-center px-4 py-2 border border-orange-300 shadow-sm text-sm font-medium rounded-md text-orange-700 bg-white hover:bg-orange-50"
               >
                 Cancel
               </button>
@@ -156,43 +156,43 @@ const DroneDetailView = () => {
 
       <div className="grid grid-cols-1 gap-6">
         {/* Main Info */}
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
-          <div className="px-4 py-5 sm:px-6 border-b border-gray-200 flex justify-between items-center">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
+        <div className="bg-white shadow overflow-hidden sm:rounded-lg border border-orange-200">
+          <div className="px-4 py-5 sm:px-6 border-b border-orange-200 flex justify-between items-center">
+            <h3 className="text-lg leading-6 font-medium text-orange-900">
               Drone Information
             </h3>
             <span className={`px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full ${statusInfo.color}`}>
               {statusInfo.label}
             </span>
           </div>
-          <div className="border-t border-gray-200">
+          <div className="border-t border-orange-200">
             <dl>
-              <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">
+              <div className="bg-orange-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt className="text-sm font-medium text-orange-500">
                   Serial Number
                 </dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <dd className="mt-1 text-sm text-orange-900 sm:mt-0 sm:col-span-2">
                   {currentDrone.serialNumber}
                 </dd>
               </div>
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">
+                <dt className="text-sm font-medium text-orange-500">
                   Model
                 </dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <dd className="mt-1 text-sm text-orange-900 sm:mt-0 sm:col-span-2">
                   {currentDrone.model}
                 </dd>
               </div>
-              <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">
+              <div className="bg-orange-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt className="text-sm font-medium text-orange-500">
                   Max Flight Time
                 </dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <dd className="mt-1 text-sm text-orange-900 sm:mt-0 sm:col-span-2">
                   {currentDrone.maxFlightTime} minutes
                 </dd>
               </div>
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">
+                <dt className="text-sm font-medium text-orange-500">
                   Health Status
                 </dt>
                 <dd className="mt-1 text-sm sm:mt-0 sm:col-span-2">
@@ -201,14 +201,14 @@ const DroneDetailView = () => {
                   </span>
                 </dd>
               </div>
-              <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">
+              <div className="bg-orange-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt className="text-sm font-medium text-orange-500">
                   Battery Level
                 </dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <dd className="mt-1 text-sm text-orange-900 sm:mt-0 sm:col-span-2">
                   <div className="flex items-center">
-                    <Battery className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
-                    <div className="w-48 bg-gray-200 rounded-full h-2.5 mr-2">
+                    <Battery className="flex-shrink-0 mr-1.5 h-5 w-5 text-orange-400" />
+                    <div className="w-48 bg-orange-200 rounded-full h-2.5 mr-2">
                       <div 
                         className={`h-2.5 rounded-full ${getBatteryColorClass(currentDrone.batteryLevel)}`} 
                         style={{ width: `${currentDrone.batteryLevel}%` }}
@@ -219,10 +219,10 @@ const DroneDetailView = () => {
                 </dd>
               </div>
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">
+                <dt className="text-sm font-medium text-orange-500">
                   Last Maintenance
                 </dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <dd className="mt-1 text-sm text-orange-900 sm:mt-0 sm:col-span-2">
                   {formatLastUpdated(currentDrone.lastMaintenance)}
                 </dd>
               </div>
@@ -231,9 +231,9 @@ const DroneDetailView = () => {
         </div>
 
         {/* Location Map */}
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
-          <div className="px-4 py-5 sm:px-6 flex justify-between items-center border-b border-gray-200">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
+        <div className="bg-white shadow overflow-hidden sm:rounded-lg border border-orange-200">
+          <div className="px-4 py-5 sm:px-6 flex justify-between items-center border-b border-orange-200">
+            <h3 className="text-lg leading-6 font-medium text-orange-900">
               Location
             </h3>
             <button
@@ -246,22 +246,22 @@ const DroneDetailView = () => {
           <div className="p-4">
             <div className="mb-4">
               <div className="flex items-center">
-                <MapPin className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
-                <span className="text-sm text-gray-700 font-medium">
+                <MapPin className="flex-shrink-0 mr-1.5 h-5 w-5 text-orange-400" />
+                <span className="text-sm text-orange-700 font-medium">
                   {currentDrone.location?.locationName || 'Location name not available'}
                 </span>
               </div>
-              <div className="mt-1 text-xs text-gray-500 ml-6">
+              <div className="mt-1 text-xs text-orange-500 ml-6">
                 Coordinates: {currentDrone.location?.latitude.toFixed(6)}, {currentDrone.location?.longitude.toFixed(6)}, 
                 Alt: {currentDrone.location?.altitude}m
               </div>
-              <div className="mt-1 text-xs text-gray-500 ml-6">
+              <div className="mt-1 text-xs text-orange-500 ml-6">
                 Last updated: {formatLastUpdated(currentDrone.location?.lastUpdated)}
               </div>
             </div>
             
             {mapVisible && (
-              <div className="border border-gray-200 rounded-md overflow-hidden" style={{ height: "400px" }}>
+              <div className="border border-orange-200 rounded-md overflow-hidden" style={{ height: "400px" }}>
                 <MapComponent 
                   key={mapKey}
                   initialLocation={

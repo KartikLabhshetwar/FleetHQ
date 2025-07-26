@@ -134,7 +134,7 @@ const SurveyReports = () => {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="text-center py-16">
           <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-600 border-r-transparent"></div>
-          <p className="mt-4 text-gray-600">Loading survey reports...</p>
+          <p className="mt-4 text-orange-600">Loading survey reports...</p>
         </div>
       </div>
     );
@@ -144,20 +144,17 @@ const SurveyReports = () => {
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Survey Reports</h1>
-          <p className="text-gray-600">View and analyze completed fleetHq missions</p>
+          <h1 className="text-3xl font-bold text-orange-900 mb-2">Survey Reports</h1>
+          <p className="text-orange-600">View and analyze completed fleetHQ missions</p>
         </div>
       </div>
       
       {/* Organization Stats */}
-      <div className="bg-white shadow rounded-lg border border-gray-200 p-6 mb-8">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Mission Overview</h2>
+      <div className="bg-white shadow rounded-lg border-2 border-orange-200 p-6 mb-8">
+        <h2 className="text-xl font-semibold text-orange-900 mb-4">Mission Overview</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-100">
             <div className="flex items-center">
-              <div className="p-3 rounded-full bg-indigo-100">
-                <Flag className="h-6 w-6 text-indigo-700" />
-              </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-indigo-500">Total Missions</p>
                 <p className="text-2xl font-bold text-indigo-900">{organizationStats.totalSurveys}</p>
@@ -167,9 +164,6 @@ const SurveyReports = () => {
           
           <div className="bg-green-50 rounded-lg p-4 border border-green-100">
             <div className="flex items-center">
-              <div className="p-3 rounded-full bg-green-100">
-                <Clock className="h-6 w-6 text-green-700" />
-              </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-green-500">Scheduled</p>
                 <p className="text-2xl font-bold text-green-900">{organizationStats.scheduledSurveys}</p>
@@ -179,9 +173,6 @@ const SurveyReports = () => {
           
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
             <div className="flex items-center">
-              <div className="p-3 rounded-full bg-blue-100">
-                <ArrowRight className="h-6 w-6 text-blue-700" />
-              </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-blue-500">In Progress</p>
                 <p className="text-2xl font-bold text-blue-900">{organizationStats.inProgressSurveys}</p>
@@ -191,9 +182,6 @@ const SurveyReports = () => {
           
           <div className="bg-red-50 rounded-lg p-4 border border-red-100">
             <div className="flex items-center">
-              <div className="p-3 rounded-full bg-red-100">
-                <Layers className="h-6 w-6 text-red-700" />
-              </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-red-500">Aborted</p>
                 <p className="text-2xl font-bold text-red-900">{organizationStats.abortedSurveys}</p>
@@ -206,21 +194,21 @@ const SurveyReports = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Survey List */}
         <div className="lg:col-span-1">
-          <div className="bg-white shadow rounded-lg border border-gray-200 overflow-hidden">
-            <div className="px-4 py-4 bg-indigo-50 border-b border-gray-200">
-              <h2 className="text-lg font-medium text-gray-900">Completed Surveys</h2>
+          <div className="bg-white shadow rounded-lg border border-orange-200 overflow-hidden">
+            <div className="px-4 py-4 bg-orange-50 border-b border-orange-200">
+              <h2 className="text-lg font-medium text-orange-900">Completed Surveys</h2>
             </div>
             
             {completedMissions.length === 0 ? (
               <div className="p-6 text-center">
-                <p className="text-gray-500">No completed surveys found</p>
+                <p className="text-orange-500">No completed surveys found</p>
               </div>
             ) : (
-              <ul className="divide-y divide-gray-200 max-h-[600px] overflow-y-auto">
+              <ul className="divide-y divide-orange-200 max-h-[600px] overflow-y-auto">
                 {completedMissions.map((mission) => (
                   <li
                     key={mission._id}
-                    className={`px-4 py-4 hover:bg-gray-50 cursor-pointer transition-colors duration-150 ease-in-out ${
+                    className={`px-4 py-4 hover:bg-orange-50 cursor-pointer transition-colors duration-150 ease-in-out ${
                       selectedMission && selectedMission._id === mission._id 
                         ? 'bg-indigo-50 border-l-4 border-indigo-500' 
                         : ''
@@ -230,8 +218,8 @@ const SurveyReports = () => {
                     <div className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-green-500 mr-3"></div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900">{mission.name}</p>
-                        <p className="text-xs text-gray-500">{formatDateTime(mission.updatedAt)}</p>
+                        <p className="text-sm font-medium text-orange-900">{mission.name}</p>
+                        <p className="text-xs text-orange-500">{formatDateTime(mission.updatedAt)}</p>
                       </div>
                     </div>
                   </li>
@@ -244,9 +232,9 @@ const SurveyReports = () => {
         {/* Survey Details */}
         <div className="lg:col-span-2">
           {selectedMission ? (
-            <div className="bg-white shadow rounded-lg border border-gray-200 overflow-hidden">
-              <div className="px-6 py-4 bg-indigo-50 border-b border-gray-200 flex justify-between items-center">
-                <h2 className="text-xl font-semibold text-gray-900">{selectedMission.name}</h2>
+            <div className="bg-white shadow rounded-lg border border-orange-200 overflow-hidden">
+              <div className="px-6 py-4 bg-indigo-50 border-b border-orange-200 flex justify-between items-center">
+                <h2 className="text-xl font-semibold text-orange-900">{selectedMission.name}</h2>
                 <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
                   <Download className="h-4 w-4 mr-2" /> Export Report
                 </button>
@@ -254,64 +242,64 @@ const SurveyReports = () => {
               
               <div className="p-6">
                 <div className="mb-6">
-                  <h3 className="text-lg font-medium text-gray-900 mb-3">Mission Details</h3>
+                  <h3 className="text-lg font-medium text-orange-900 mb-3">Mission Details</h3>
                   
-                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+                  <div className="bg-orange-50 rounded-lg p-4 border border-orange-100">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">Date Completed</p>
-                        <p className="text-sm font-medium text-gray-900">{formatDateTime(selectedMission.updatedAt)}</p>
+                        <p className="text-sm text-orange-500 mb-1">Date Completed</p>
+                        <p className="text-sm font-medium text-orange-900">{formatDateTime(selectedMission.updatedAt)}</p>
                       </div>
                       
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">Drone Used</p>
-                        <p className="text-sm font-medium text-gray-900">{selectedMission.drone?.name || 'N/A'}</p>
+                        <p className="text-sm text-orange-500 mb-1">Drone Used</p>
+                        <p className="text-sm font-medium text-orange-900">{selectedMission.drone?.name || 'N/A'}</p>
                       </div>
                       
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">Flight Pattern</p>
-                        <p className="text-sm font-medium text-gray-900 capitalize">{selectedMission.flightParameters.flightPattern}</p>
+                        <p className="text-sm text-orange-500 mb-1">Flight Pattern</p>
+                        <p className="text-sm font-medium text-orange-900 capitalize">{selectedMission.flightParameters.flightPattern}</p>
                       </div>
                       
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">Flight Altitude</p>
-                        <p className="text-sm font-medium text-gray-900">{selectedMission.flightParameters.altitude}m</p>
+                        <p className="text-sm text-orange-500 mb-1">Flight Altitude</p>
+                        <p className="text-sm font-medium text-orange-900">{selectedMission.flightParameters.altitude}m</p>
                       </div>
                       
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">Flight Speed</p>
-                        <p className="text-sm font-medium text-gray-900">{selectedMission.flightParameters.speed} m/s</p>
+                        <p className="text-sm text-orange-500 mb-1">Flight Speed</p>
+                        <p className="text-sm font-medium text-orange-900">{selectedMission.flightParameters.speed} m/s</p>
                       </div>
                       
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">Image Overlap</p>
-                        <p className="text-sm font-medium text-gray-900">{selectedMission.flightParameters.overlap}%</p>
+                        <p className="text-sm text-orange-500 mb-1">Image Overlap</p>
+                        <p className="text-sm font-medium text-orange-900">{selectedMission.flightParameters.overlap}%</p>
                       </div>
                       
                       {/* Add survey area calculation */}
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">Survey Area Size</p>
-                        <p className="text-sm font-medium text-gray-900">{surveyAreaSize}</p>
+                        <p className="text-sm text-orange-500 mb-1">Survey Area Size</p>
+                        <p className="text-sm font-medium text-orange-900">{surveyAreaSize}</p>
                       </div>
                     </div>
                   </div>
                 </div>
                 
                 <div className="mb-6">
-                  <h3 className="text-lg font-medium text-gray-900 mb-3">Survey Area</h3>
+                  <h3 className="text-lg font-medium text-orange-900 mb-3">Survey Area</h3>
                   
-                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-100 flex justify-center">
+                  <div className="bg-orange-50 rounded-lg p-4 border border-orange-100 flex justify-center">
                     {/* This would be an actual map visualization with the survey area in a real implementation */}
-                    <div className="bg-white border border-gray-200 rounded-lg w-full h-64 flex items-center justify-center">
+                    <div className="bg-white border border-orange-200 rounded-lg w-full h-64 flex items-center justify-center">
                       <div className="text-center">
-                        <MapPin className="h-10 w-10 text-gray-400 mx-auto mb-2" />
-                        <p className="text-gray-500">Survey area coordinates: {
+                        <MapPin className="h-10 w-10 text-orange-400 mx-auto mb-2" />
+                        <p className="text-orange-500">Survey area coordinates: {
                           selectedMission.surveyArea?.coordinates?.[0]?.[0] 
                             ? `(${selectedMission.surveyArea.coordinates[0][0][0].toFixed(6)}, ${selectedMission.surveyArea.coordinates[0][0][1].toFixed(6)})...` 
                             : 'Not available'
                         }</p>
                         {surveyAreaSize && (
-                          <p className="text-gray-600 mt-2">Total area: {surveyAreaSize}</p>
+                          <p className="text-orange-600 mt-2">Total area: {surveyAreaSize}</p>
                         )}
                       </div>
                     </div>
@@ -319,17 +307,17 @@ const SurveyReports = () => {
                 </div>
                 
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-3">Notes</h3>
+                  <h3 className="text-lg font-medium text-orange-900 mb-3">Notes</h3>
                   
-                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
-                    <p className="text-sm text-gray-700">{selectedMission.description || 'No notes available for this survey.'}</p>
+                  <div className="bg-orange-50 rounded-lg p-4 border border-orange-100">
+                    <p className="text-sm text-orange-700">{selectedMission.description || 'No notes available for this survey.'}</p>
                   </div>
                 </div>
                 
                 <div className="mt-6 flex justify-end">
                   <Link
                     to={`/monitoring`}
-                    className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                    className="inline-flex items-center px-4 py-2 border border-orange-300 shadow-sm text-sm font-medium rounded-md text-orange-700 bg-white hover:bg-orange-50"
                   >
                     Back to Monitoring
                   </Link>
@@ -337,11 +325,10 @@ const SurveyReports = () => {
               </div>
             </div>
           ) : (
-            <div className="bg-white shadow rounded-lg border border-gray-200 overflow-hidden h-full flex items-center justify-center">
+            <div className="bg-yellow-50 shadow rounded-lg border border-orange-200 overflow-hidden h-full flex items-center justify-center">
               <div className="p-8 text-center">
-                <BarChart2 className="h-16 w-16 text-gray-400 mx-auto" />
-                <h3 className="mt-4 text-lg font-medium text-gray-900">Select a survey to view details</h3>
-                <p className="mt-2 text-gray-500">
+                <h3 className="mt-4 text-lg font-medium text-orange-900">Select a survey to view details</h3>
+                <p className="mt-2 text-orange-500">
                   Choose a completed survey from the list to see detailed reports.
                 </p>
               </div>

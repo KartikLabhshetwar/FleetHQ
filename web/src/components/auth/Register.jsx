@@ -17,7 +17,7 @@ const Register = () => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   
   const navigate = useNavigate();
-  const { setUser, setLoading, isLoading, error, clearError, setError } = useAuthStore();
+  const { setUser, setLoading, isLoading, error, clearError, setError, setAuthenticated } = useAuthStore();
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,8 +46,11 @@ const Register = () => {
       setLoading(true);
       const userData = { name, email, password, role };
       const registeredUser = await register(userData);
-      localStorage.setItem('user', JSON.stringify(registeredUser));
+      
+      // Store user in Zustand state (which will also persist to localStorage)
       setUser(registeredUser);
+      setAuthenticated(true);
+      
       navigate('/dashboard');
     } catch (error) {
       setError(error.message);
@@ -58,22 +61,29 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gradient-to-b from-indigo-50 to-white">
+    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-25 to-orange-50">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="text-center">
-          <h2 className="text-center text-3xl font-extrabold text-gray-900 mb-2">
+          <div className="flex justify-center mb-4">
+            <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+              <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21l3-9 7-4-10-6 3 6z" />
+              </svg>
+            </div>
+          </div>
+          <h2 className="text-center text-3xl font-extrabold text-orange-900 mb-2">
             Create your account
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Join our FleetHQ
+          <p className="mt-2 text-center text-sm text-orange-600">
+            Join FleetHQ
           </p>
         </div>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-200">
+        <div className="bg-white py-8 px-4 shadow-lg sm:rounded-lg sm:px-10 border border-orange-200">
           {error && (
-            <div className="rounded-md bg-red-50 p-4 mb-6">
+            <div className="rounded-md bg-red-50 border border-red-200 p-4 mb-6">
               <div className="flex">
                 <div className="flex-shrink-0">
                   <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -88,7 +98,7 @@ const Register = () => {
           )}
           
           {!passwordMatch && (
-            <div className="rounded-md bg-red-50 p-4 mb-6">
+            <div className="rounded-md bg-red-50 border border-red-200 p-4 mb-6">
               <div className="flex">
                 <div className="flex-shrink-0">
                   <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -104,7 +114,7 @@ const Register = () => {
           
           <form className="space-y-8" onSubmit={onSubmit}>
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="name" className="block text-sm font-medium text-orange-800">
                 Full Name
               </label>
               <div className="mt-1">
@@ -113,7 +123,7 @@ const Register = () => {
                   name="name"
                   type="text"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm placeholder-orange-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                   placeholder="Enter your full name"
                   value={name}
                   onChange={onChange}
@@ -122,7 +132,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-orange-800">
                 Email address
               </label>
               <div className="mt-1">
@@ -131,7 +141,7 @@ const Register = () => {
                   name="email"
                   type="email"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm placeholder-orange-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                   placeholder="Enter your email"
                   value={email}
                   onChange={onChange}
@@ -140,7 +150,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-orange-800">
                 Password
               </label>
               <div className="mt-1">
@@ -149,18 +159,18 @@ const Register = () => {
                   name="password"
                   type="password"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm placeholder-orange-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                   placeholder="Create a password"
                   value={password}
                   onChange={onChange}
                   minLength="6"
                 />
               </div>
-              <p className="mt-1 text-xs text-gray-500">Password must be at least 6 characters</p>
+              <p className="mt-1 text-xs text-orange-600">Password must be at least 6 characters</p>
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-orange-800">
                 Confirm Password
               </label>
               <div className="mt-1">
@@ -169,7 +179,7 @@ const Register = () => {
                   name="confirmPassword"
                   type="password"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm placeholder-orange-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                   placeholder="Confirm your password"
                   value={confirmPassword}
                   onChange={onChange}
@@ -179,7 +189,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="role" className="block text-sm font-medium text-orange-800">
                 Role
               </label>
               <div className="mt-1">
@@ -187,7 +197,7 @@ const Register = () => {
                   id="role"
                   name="role"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm placeholder-orange-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                   value={role}
                   onChange={onChange}
                 >
@@ -202,7 +212,7 @@ const Register = () => {
               <button
                 type="submit"
                 disabled={isLoading || !passwordMatch}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300 transition-colors duration-200"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:bg-orange-300 transition-colors duration-200"
               >
                 {isLoading ? (
                   <span className="flex items-center">
@@ -222,17 +232,17 @@ const Register = () => {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-orange-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Already have an account?</span>
+                <span className="px-2 bg-white text-orange-600">Already have an account?</span>
               </div>
             </div>
 
             <div className="mt-6">
               <Link
                 to="/login"
-                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200"
+                className="w-full flex justify-center py-2 px-4 border border-orange-300 rounded-md shadow-sm text-sm font-medium text-orange-600 bg-white hover:bg-orange-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
               >
                 Sign in to your account
               </Link>

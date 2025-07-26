@@ -1,6 +1,12 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
+// Auth Provider
+import AuthProvider from './components/auth/AuthProvider';
+
+// Landing Page Component
+import LandingPage from './components/LandingPage';
+
 // Auth Components
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
@@ -29,8 +35,12 @@ import SurveyReports from './components/reports/SurveyReports';
 
 function App() {
   return (
-    <Router>
-      <Routes>
+    <AuthProvider>
+      <Router>
+        <Routes>
+        {/* Landing Page */}
+        <Route path="/" element={<LandingPage />} />
+        
         {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -67,13 +77,11 @@ function App() {
           </Route>
         </Route>
         
-        {/* Redirect to dashboard if authenticated, or login if not */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        
-        {/* 404 Route */}
+        {/* 404 Route - redirect to landing page */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
+    </AuthProvider>
   );
 }
 

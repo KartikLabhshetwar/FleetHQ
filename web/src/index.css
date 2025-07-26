@@ -1,1 +1,43 @@
 @import "tailwindcss";
+
+/* Global Orange Theme Variables */
+:root {
+  --primary-orange: #f97316; /* orange-500 */
+  --primary-orange-hover: #ea580c; /* orange-600 */
+  --primary-orange-light: #fed7aa; /* orange-200 */
+  --primary-orange-lighter: #fff7ed; /* orange-50 */
+  --primary-orange-dark: #9a3412; /* orange-800 */
+  --primary-orange-darker: #7c2d12; /* orange-900 */
+  --border-orange: #fed7aa; /* orange-200 */
+  --background-orange: #fff7ed; /* orange-50 */
+}
+
+/* Custom orange-25 color for very light backgrounds */
+.bg-orange-25 {
+  background-color: #fffbf7;
+}
+
+/* Ensure consistent body styling */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--primary-orange-darker);
+  background-color: var(--background-orange);
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary-orange-lighter);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-orange);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-orange-hover);
+}
