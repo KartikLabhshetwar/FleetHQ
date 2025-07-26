@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import useAuthStore from '../../stores/authStore';
 import { register } from '../../services/authService';
+import Navigation from '../landing/Navigation';
+import Footer from '../landing/Footer';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -61,8 +63,11 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-25 to-orange-50">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-orange-25 to-orange-50">
+      <Navigation />
+      
+      <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8 pt-24">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="text-center">
           <div className="flex justify-center mb-4">
             <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
@@ -80,7 +85,7 @@ const Register = () => {
         </div>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow-lg sm:rounded-lg sm:px-10 border border-orange-200">
           {error && (
             <div className="rounded-md bg-red-50 border border-red-200 p-4 mb-6">
@@ -249,7 +254,10 @@ const Register = () => {
             </div>
           </div>
         </div>
+        </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };
