@@ -1,3 +1,6 @@
+<img width="2816" height="1536" alt="open_graph" src="https://github.com/user-attachments/assets/538c614d-5601-402f-a684-72be96ff7dfd" />
+
+
 # Fleet HQ
 
 Enterprise drone fleet management system for autonomous operations, mission planning, and real-time monitoring.
