@@ -23,7 +23,7 @@ app.use("/api/drones", droneRoutes);
 
 
 app.get("/", (req, res) => {
-  res.json({ message: "Drone Survey API is running" });
+  res.json({ message: "fleetHq API is running" });
 });
 
 
