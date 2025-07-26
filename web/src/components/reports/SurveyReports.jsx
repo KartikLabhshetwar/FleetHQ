@@ -1,9 +1,10 @@
 // client/src/components/reports/SurveyReports.jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import useMissionStore from '../../stores/missionStore';
 import { fetchMissions } from '../../services/missionService';
 import { BarChart2, Calendar, MapPin, Clock, ArrowRight, Download, Layers, Flag } from 'lucide-react';
+import * as XLSX from 'xlsx';
 
 // Calculate polygon area using the Shoelace formula (Gauss's area formula)
 const calculatePolygonArea = (coordinates) => {
@@ -73,6 +74,70 @@ const formatArea = (areaSqKm) => {
   }
 };
 
+// Export function for survey data
+const exportSurveyData = (mission, surveyAreaSize, format = 'xlsx') => {
+  // Prepare the data for export
+  const exportData = {
+    'Mission Name': mission.name,
+    'Date Completed': new Date(mission.updatedAt).toLocaleString(),
+    'Status': mission.status,
+    'Drone Used': mission.drone?.name || 'N/A',
+    'Drone Model': mission.drone?.model || 'N/A',
+    'Flight Pattern': mission.flightParameters?.flightPattern || 'N/A',
+    'Flight Altitude (m)': mission.flightParameters?.altitude || 'N/A',
+    'Flight Speed (m/s)': mission.flightParameters?.speed || 'N/A',
+    'Image Overlap (%)': mission.flightParameters?.overlap || 'N/A',
+    'Survey Area Size': surveyAreaSize,
+    'Survey Area Coordinates': mission.surveyArea?.coordinates?.[0]?.map(coord => 
+      `(${coord[0].toFixed(6)}, ${coord[1].toFixed(6)})`
+    ).join('; ') || 'Not available',
+    'Mission Description': mission.description || 'No description available',
+    'Created Date': new Date(mission.createdAt).toLocaleString(),
+    'Updated Date': new Date(mission.updatedAt).toLocaleString(),
+    'Schedule Date': mission.schedule?.dateTime ? new Date(mission.schedule.dateTime).toLocaleString() : 'N/A',
+  };
+
+  // Create worksheet
+  const worksheet = XLSX.utils.json_to_sheet([exportData]);
+  
+  // Set column widths for better readability
+  const columnWidths = [
+    { wch: 20 }, // Mission Name
+    { wch: 20 }, // Date Completed
+    { wch: 12 }, // Status
+    { wch: 15 }, // Drone Used
+    { wch: 15 }, // Drone Model
+    { wch: 15 }, // Flight Pattern
+    { wch: 18 }, // Flight Altitude
+    { wch: 18 }, // Flight Speed
+    { wch: 18 }, // Image Overlap
+    { wch: 18 }, // Survey Area Size
+    { wch: 50 }, // Survey Area Coordinates
+    { wch: 30 }, // Mission Description
+    { wch: 20 }, // Created Date
+    { wch: 20 }, // Updated Date
+    { wch: 20 }, // Schedule Date
+  ];
+  worksheet['!cols'] = columnWidths;
+
+  // Create workbook
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Survey Report');
+
+  // Generate filename with mission name and current date
+  const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+  const sanitizedMissionName = mission.name.replace(/[^a-zA-Z0-9]/g, '_');
+  const filename = `Survey_Report_${sanitizedMissionName}_${timestamp}`;
+
+  if (format === 'csv') {
+    // Export as CSV
+    XLSX.writeFile(workbook, `${filename}.csv`);
+  } else {
+    // Export as Excel (default)
+    XLSX.writeFile(workbook, `${filename}.xlsx`);
+  }
+};
+
 const SurveyReports = () => {
   const { missions, isLoading } = useMissionStore();
   const [completedMissions, setCompletedMissions] = useState([]);
@@ -86,10 +151,26 @@ const SurveyReports = () => {
   
   // New state for survey area calculation
   const [surveyAreaSize, setSurveyAreaSize] = useState('');
+  const [showExportDropdown, setShowExportDropdown] = useState(false);
+  const dropdownRef = useRef(null);
   
   useEffect(() => {
     // Fetch missions on component mount
     fetchMissions();
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowExportDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
   
   useEffect(() => {
@@ -133,7 +214,7 @@ const SurveyReports = () => {
     return (
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="text-center py-16">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-600 border-r-transparent"></div>
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-orange-600 border-r-transparent"></div>
           <p className="mt-4 text-orange-600">Loading survey reports...</p>
         </div>
       </div>
@@ -153,11 +234,11 @@ const SurveyReports = () => {
       <div className="bg-white shadow rounded-lg border-2 border-orange-200 p-6 mb-8">
         <h2 className="text-xl font-semibold text-orange-900 mb-4">Mission Overview</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-100">
+          <div className="bg-orange-50 rounded-lg p-4 border border-orange-100">
             <div className="flex items-center">
               <div className="ml-4">
-                <p className="text-sm font-medium text-indigo-500">Total Missions</p>
-                <p className="text-2xl font-bold text-indigo-900">{organizationStats.totalSurveys}</p>
+                <p className="text-sm font-medium text-orange-500">Total Missions</p>
+                <p className="text-2xl font-bold text-orange-900">{organizationStats.totalSurveys}</p>
               </div>
             </div>
           </div>
@@ -210,7 +291,7 @@ const SurveyReports = () => {
                     key={mission._id}
                     className={`px-4 py-4 hover:bg-orange-50 cursor-pointer transition-colors duration-150 ease-in-out ${
                       selectedMission && selectedMission._id === mission._id 
-                        ? 'bg-indigo-50 border-l-4 border-indigo-500' 
+                        ? 'bg-orange-50 border-l-4 border-orange-500' 
                         : ''
                     }`}
                     onClick={() => handleSelectMission(mission)}
@@ -233,11 +314,51 @@ const SurveyReports = () => {
         <div className="lg:col-span-2">
           {selectedMission ? (
             <div className="bg-white shadow rounded-lg border border-orange-200 overflow-hidden">
-              <div className="px-6 py-4 bg-indigo-50 border-b border-orange-200 flex justify-between items-center">
+              <div className="px-6 py-4 bg-orange-50 border-b border-orange-200 flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-orange-900">{selectedMission.name}</h2>
-                <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
-                  <Download className="h-4 w-4 mr-2" /> Export Report
-                </button>
+                <div className="relative" ref={dropdownRef}>
+                  <button 
+                    onClick={() => setShowExportDropdown(!showExportDropdown)}
+                    className="inline-flex rounded-md items-center px-4 py-2 border border-orange-300 border-b-5 border-r-5 hover:border-2 bg-white"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Export Report
+                    <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  
+                  {showExportDropdown && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border border-orange-200 rounded-md shadow-lg z-10">
+                      <div className="py-1">
+                        <button
+                          onClick={() => {
+                            exportSurveyData(selectedMission, surveyAreaSize, 'xlsx');
+                            setShowExportDropdown(false);
+                          }}
+                          className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-900"
+                        >
+                          <svg className="mr-3 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          Export as Excel (.xlsx)
+                        </button>
+                        <button
+                          onClick={() => {
+                            exportSurveyData(selectedMission, surveyAreaSize, 'csv');
+                            setShowExportDropdown(false);
+                          }}
+                          className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-900"
+                        >
+                          <svg className="mr-3 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          Export as CSV (.csv)
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
               
               <div className="p-6">

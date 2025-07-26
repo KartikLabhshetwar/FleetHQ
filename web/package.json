@@ -32,6 +32,7 @@
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.11",
+    "xlsx": "^0.18.5",
     "zustand": "^5.0.6"
   },
   "devDependencies": {
