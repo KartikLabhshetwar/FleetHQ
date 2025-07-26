@@ -33,6 +33,9 @@ import MissionMonitoring from './components/monitoring/MissionMonitoring';
 // Survey Reports Component
 import SurveyReports from './components/reports/SurveyReports';
 
+// Documentation Component
+import Documentation from './components/Documentation';
+
 function App() {
   return (
     <AuthProvider>
@@ -44,6 +47,7 @@ function App() {
         {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/documentation" element={<Documentation />} />
         
         {/* Protected Routes with Dashboard Layout */}
         <Route element={<ProtectedRoute />}>
