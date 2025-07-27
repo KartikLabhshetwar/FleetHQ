@@ -8,6 +8,13 @@ Enterprise drone fleet management system for autonomous operations, mission plan
 ## Documentation
 Docs for this project is [here](https://fleet-hq.vercel.app/documentation)
 
+## Demo
+
+
+https://github.com/user-attachments/assets/74176f41-076c-4786-8d55-806c08208caf
+
+
+
 ## Features
 
 - **Mission Planning**: Interactive map-based flight path creation with waypoint optimization
