@@ -13,7 +13,11 @@ const app = express();
 connectDB();
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://fleet-hq.vercel.app"],
+  origin: [
+    "http://localhost:3000",
+    "https://fleet-hq.vercel.app",
+    "https://www.fleethq.kartiklabhshetwar.me",
+  ],
   credentials: true,
   optionsSuccessStatus: 200,
 };
