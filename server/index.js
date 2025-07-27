@@ -13,12 +13,9 @@ const app = express();
 connectDB();
 
 const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'https://fleethq.onrender.com'
-  ],
+  origin: ["http://localhost:3000", "https://fleet-hq.vercel.app"],
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
