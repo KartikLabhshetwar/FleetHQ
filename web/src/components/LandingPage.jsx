@@ -1,9 +1,8 @@
 // Landing page components
 import Navigation from "./landing/Navigation";
 import HeroSection from "./landing/HeroSection";
+import DemoSection from "./landing/DemoSection";
 import FeaturesSection from "./landing/FeaturesSection";
-import DocumentationSection from "./landing/DocumentationSection";
-import BenefitsSection from "./landing/BenefitsSection";
 import CallToActionSection from "./landing/CallToActionSection";
 import Footer from "./landing/Footer";
 
@@ -36,9 +35,8 @@ export default function LandingPage() {
       <div className="relative z-10">
         <Navigation />
         <HeroSection />
+        <DemoSection />
         <FeaturesSection />
-        <DocumentationSection />
-        <BenefitsSection />
         <CallToActionSection />
         <Footer />
       </div>
