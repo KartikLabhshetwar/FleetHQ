@@ -16,13 +16,31 @@ const MissionPlanningForm = () => {
   const { isLoading, error, clearError, currentMission } = useMissionStore();
   const { availableDrones } = useDroneStore();
   
+  // Helper function to get current datetime in local format
+  const getCurrentDateTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
   // Helper function to get default datetime (1 hour from now)
   const getDefaultDateTime = () => {
     const now = new Date();
     const oneHourLater = new Date(now.getTime() + (60 * 60 * 1000));
-    const tzOffset = oneHourLater.getTimezoneOffset() * 60000;
-    const localDate = new Date(oneHourLater.getTime() - tzOffset);
-    return localDate.toISOString().slice(0, 16);
+    
+    // Get the local date and time components
+    const year = oneHourLater.getFullYear();
+    const month = String(oneHourLater.getMonth() + 1).padStart(2, '0');
+    const day = String(oneHourLater.getDate()).padStart(2, '0');
+    const hours = String(oneHourLater.getHours()).padStart(2, '0');
+    const minutes = String(oneHourLater.getMinutes()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
   
   const [formData, setFormData] = useState({
@@ -54,21 +72,63 @@ const MissionPlanningForm = () => {
   // Helper function to format date for datetime-local input (maintains local timezone)
   const formatDateTimeForInput = (dateString) => {
     if (!dateString) return '';
-    const date = new Date(dateString);
-    // Get local timezone offset and adjust the date
-    const tzOffset = date.getTimezoneOffset() * 60000;
-    const localDate = new Date(date.getTime() - tzOffset);
-    return localDate.toISOString().slice(0, 16);
+    
+    console.log('Input date string:', dateString);
+    
+    // Handle different date formats that might be received
+    let date;
+    if (typeof dateString === 'string') {
+      // If it's an ISO string, create date normally
+      date = new Date(dateString);
+    } else if (dateString instanceof Date) {
+      // If it's already a Date object
+      date = dateString;
+    } else {
+      console.error('Unexpected date format:', typeof dateString, dateString);
+      return '';
+    }
+    
+    console.log('Parsed date object:', date);
+    console.log('Date toString:', date.toString());
+    console.log('Date toISOString:', date.toISOString());
+    console.log('Date getTimezoneOffset:', date.getTimezoneOffset());
+    
+    // Check if the date is valid
+    if (isNaN(date.getTime())) {
+      console.error('Invalid date string:', dateString);
+      return '';
+    }
+    
+    // Get the local date and time components
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    
+    const result = `${year}-${month}-${day}T${hours}:${minutes}`;
+    console.log('Formatted result for input:', result);
+    return result;
   };
 
   // Helper function to format date for date input (maintains local timezone)
   const formatDateForInput = (dateString) => {
     if (!dateString) return '';
+    
     const date = new Date(dateString);
-    // Get local timezone offset and adjust the date
-    const tzOffset = date.getTimezoneOffset() * 60000;
-    const localDate = new Date(date.getTime() - tzOffset);
-    return localDate.toISOString().slice(0, 10);
+    
+    // Check if the date is valid
+    if (isNaN(date.getTime())) {
+      console.error('Invalid date string:', dateString);
+      return '';
+    }
+    
+    // Get the local date components
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
   };
   
   // Fetch mission data if in edit mode
@@ -598,7 +658,7 @@ const MissionPlanningForm = () => {
                     id="dateTime"
                     name="dateTime"
                     value={formData.schedule.dateTime}
-                    min={new Date().toISOString().slice(0, 16)}
+                    min={getCurrentDateTime()}
                     onChange={handleDateTimeChange}
                     className={`w-full px-3 py-2 border ${
                       formErrors.dateTime ? 'border-red-300' : 'border-orange-300'
