@@ -6,7 +6,7 @@
 Enterprise drone fleet management system for autonomous operations, mission planning, and real-time monitoring.
 
 ## Documentation
-Docs for this project is [here](https://fleethq.onrender.com/documentation)
+Docs for this project is [here](https://fleet-hq.vercel.app/documentation)
 
 ## Features
 
