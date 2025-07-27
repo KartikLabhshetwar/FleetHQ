@@ -12,10 +12,21 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+    'https://fleethq.onrender.com'
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Handle preflight requests
+app.options('*', cors(corsOptions));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/missions", missionRoutes);
