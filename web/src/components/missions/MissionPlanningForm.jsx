@@ -16,6 +16,15 @@ const MissionPlanningForm = () => {
   const { isLoading, error, clearError, currentMission } = useMissionStore();
   const { availableDrones } = useDroneStore();
   
+  // Helper function to get default datetime (1 hour from now)
+  const getDefaultDateTime = () => {
+    const now = new Date();
+    const oneHourLater = new Date(now.getTime() + (60 * 60 * 1000));
+    const tzOffset = oneHourLater.getTimezoneOffset() * 60000;
+    const localDate = new Date(oneHourLater.getTime() - tzOffset);
+    return localDate.toISOString().slice(0, 16);
+  };
+  
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -29,7 +38,7 @@ const MissionPlanningForm = () => {
     },
     schedule: {
       type: 'oneTime',
-      dateTime: '',
+      dateTime: isEditMode ? '' : getDefaultDateTime(), // Set default only for new missions
       recurrence: {
         frequency: 'weekly',
         interval: 1,
@@ -42,6 +51,26 @@ const MissionPlanningForm = () => {
   const [showRecurrence, setShowRecurrence] = useState(false);
   const [initialLocation, setInitialLocation] = useState(null);
   
+  // Helper function to format date for datetime-local input (maintains local timezone)
+  const formatDateTimeForInput = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    // Get local timezone offset and adjust the date
+    const tzOffset = date.getTimezoneOffset() * 60000;
+    const localDate = new Date(date.getTime() - tzOffset);
+    return localDate.toISOString().slice(0, 16);
+  };
+
+  // Helper function to format date for date input (maintains local timezone)
+  const formatDateForInput = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    // Get local timezone offset and adjust the date
+    const tzOffset = date.getTimezoneOffset() * 60000;
+    const localDate = new Date(date.getTime() - tzOffset);
+    return localDate.toISOString().slice(0, 10);
+  };
+  
   // Fetch mission data if in edit mode
   useEffect(() => {
     if (isEditMode) {
@@ -49,14 +78,10 @@ const MissionPlanningForm = () => {
         const mission = await fetchMissionById(id);
         if (mission) {
           // Format the dateTime to be compatible with datetime-local input
-          const formattedDateTime = mission.schedule.dateTime 
-            ? new Date(mission.schedule.dateTime).toISOString().slice(0, 16)
-            : '';
+          const formattedDateTime = formatDateTimeForInput(mission.schedule.dateTime);
             
           // Format the end date if it exists
-          const formattedEndDate = mission.schedule.recurrence?.endDate
-            ? new Date(mission.schedule.recurrence.endDate).toISOString().slice(0, 10)
-            : '';
+          const formattedEndDate = formatDateForInput(mission.schedule.recurrence?.endDate);
           
           setFormData({
             ...mission,
@@ -119,7 +144,16 @@ const MissionPlanningForm = () => {
     
     if (!formData.name.trim()) errors.name = 'Mission name is required';
     if (!formData.surveyArea) errors.surveyArea = 'You must draw a survey area on the map';
-    if (!formData.schedule.dateTime) errors.dateTime = 'Mission date and time is required';
+    if (!formData.schedule.dateTime) {
+      errors.dateTime = 'Mission date and time is required';
+    } else {
+      // Validate that the date is not in the past
+      const selectedDate = new Date(formData.schedule.dateTime);
+      const now = new Date();
+      if (selectedDate <= now) {
+        errors.dateTime = 'Mission cannot be scheduled in the past';
+      }
+    }
     if (!formData.drone) errors.drone = 'You must select a drone for the mission';
     
     // Validate flight parameters
@@ -564,6 +598,7 @@ const MissionPlanningForm = () => {
                     id="dateTime"
                     name="dateTime"
                     value={formData.schedule.dateTime}
+                    min={new Date().toISOString().slice(0, 16)}
                     onChange={handleDateTimeChange}
                     className={`w-full px-3 py-2 border ${
                       formErrors.dateTime ? 'border-red-300' : 'border-orange-300'

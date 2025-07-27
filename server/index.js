@@ -14,7 +14,7 @@ connectDB();
 
 const corsOptions = {
   origin: [
-    "http://localhost:3000",
+    "http://localhost:5173",
     "https://fleet-hq.vercel.app",
     "https://www.fleethq.kartiklabhshetwar.me",
   ],
