@@ -88,10 +88,11 @@ export default function HeroSection() {
               ) : (
                 <Button 
                   size="lg" 
-                  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-4 rounded-lg transform hover:scale-105 transition-all duration-200"
+                  className="bg-orange-500 border border-orange-600 border-b-5 border-r-5 text-white hover:border-2 font-semibold px-8 py-4"
                 >
-                  Plan New Mission
-                  <ArrowRight className="h-5 w-5 ml-2" />
+                  <Link to="/dashboard">
+                    Plan New Mission
+                  </Link>
                 </Button>
               )}
             </div>

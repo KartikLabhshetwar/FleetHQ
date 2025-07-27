@@ -24,7 +24,6 @@ export default function Navigation() {
               <Button asChild className="bg-orange-500 border border-orange-600 border-b-5 border-r-5 text-white hover:border-2 font-semibold px-8 py-4">
                 <Link to="/dashboard">
                   Go to Dashboard
-                  <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </Button>
             ) : (
